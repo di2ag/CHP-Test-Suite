@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "c5567d23-0957-4cae-ac07-7293419cb8cc",
+		"name": "SimpleHealthCheck",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ranking Agent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f4332e9d-165d-44cc-93d0-4a42a26b54dd",
+						"exec": [
+							"pm.test(\"Valid Query Test\", function(){\r",
+							"    pm.response.to.be.ok;\r",
+							"    pm.expect(responseJson.type).to.eql('Healthy');\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": {\r\n        \"query_graph\": {\r\n            \"edges\": [\r\n                {\r\n                    \"id\": \"e0\",\r\n                    \"type\": \"causes\",\r\n                    \"curie\": [\r\n                        \"RO:0002410\"\r\n                    ],\r\n                    \"source_id\": \"n0\",\r\n                    \"target_id\": \"n1\"\r\n                }\r\n            ],\r\n            \"nodes\": [\r\n                {\r\n                    \"id\": \"n0\",\r\n                    \"type\": \"Gene\",\r\n                    \"name\": \"RAF1\",\r\n                    \"curie\": \"ENSEMBL:ENSG00000132155\"\r\n                },\r\n                {\r\n                    \"id\": \"n1\",\r\n                    \"type\": \"Death\",\r\n                    \"curie\": \"UBERON:0000071\",\r\n                    \"operator\": \">=\",\r\n                    \"value\": \"1000\"\r\n                }\r\n            ]\r\n        },\r\n        \"knowledge_graph\": {\r\n            \"edges\": [],\r\n            \"nodes\": []\r\n        },\r\n        \"response\": {},\r\n        \"results\": {\r\n            \"node_bindings\": [],\r\n            \"edge_bindings\": []\r\n        },\r\n        \"reasoner_id\": \"ranking\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.3.4.0/submitQuery/",
+					"protocol": "http",
+					"host": [
+						"10",
+						"3",
+						"4",
+						"0"
+					],
+					"path": [
+						"submitQuery",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

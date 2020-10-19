@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./webapp-service
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./webapp-service/:/usr/src/app/
+    ports:
+      - 8000:8000
+    env_file:
+      - ./webapp-service/.env.dev
+    networks: 
+      jenkins: {}
+  newman:
+    build: ./newman-service
+    volumes: 
+      - ./newman-service/:/usr/src/newmanRunner/
+      - ./webapp-service/:/usr/src/web/
+    networks: 
+      jenkins: {}
+    command: tail -f /dev/null
+  docker:
+    image: docker:dind
+    volumes: 
+      - type: volume
+        source: jenkins-docker-certs
+        target: /certs/client
+      - type: volume
+        source: jenkins-data
+        target: /var/jenkins_home
+    ports:
+      - 2376:2376
+    networks: 
+      jenkins: {}
+    env_file: 
+      ./docker-service/docker.env
+    command: tail -f /dev/null
+  jenkins:
+    image: jenkinsci/blueocean
+    networks: 
+      jenkins: {}
+    env_file:
+      ./jenkins-service/jenkins.env
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes: 
+      - type: volume
+        source: jenkins-docker-certs
+        target: /certs/client:ro
+      - type: volume
+        source: jenkins-data
+        target: /var/jenkins_home
+
+
+volumes: 
+  jenkins-data:
+  jenkins-docker-certs:
+
+networks: 
+  jenkins: 
+    driver: bridge
+    name: docker

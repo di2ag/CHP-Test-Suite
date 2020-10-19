@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "46cec3d9-c92b-4f26-a585-cec825f27760",
+		"name": "perception tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ranking Agent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c9b232de-b45e-4c23-99de-3ab9f3b46e68",
+						"exec": [
+							"pm.test(\"Valid Query Test\", function(){\r",
+							"    pm.response.to.be.ok;\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": {\r\n        \"query_graph\": {\r\n            \"edges\": [\r\n                {\r\n                    \"id\": \"e0\",\r\n                    \"type\": \"causes\",\r\n                    \"curie\": [\r\n                        \"RO:0002410\"\r\n                    ],\r\n                    \"source_id\": \"n0\",\r\n                    \"target_id\": \"n1\"\r\n                }\r\n            ],\r\n            \"nodes\": [\r\n                {\r\n                    \"id\": \"n0\",\r\n                    \"type\": \"Gene\",\r\n                    \"name\": \"RAF1\",\r\n                    \"curie\": \"ENSEMBL:ENSG00000132155\"\r\n                },\r\n                {\r\n                    \"id\": \"n1\",\r\n                    \"type\": \"Death\",\r\n                    \"curie\": \"UBERON:0000071\",\r\n                    \"operator\": \">=\",\r\n                    \"value\": \"1000\"\r\n                }\r\n            ]\r\n        },\r\n        \"knowledge_graph\": {\r\n            \"edges\": [],\r\n            \"nodes\": []\r\n        },\r\n        \"response\": {},\r\n        \"results\": {\r\n            \"node_bindings\": [],\r\n            \"edge_bindings\": []\r\n        },\r\n        \"reasoner_id\": \"ranking\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://chp.thayer.dartmouth.edu/submitQuery/",
+					"protocol": "http",
+					"host": [
+						"chp",
+						"thayer",
+						"dartmouth",
+						"edu"
+					],
+					"path": [
+						"submitQuery",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
